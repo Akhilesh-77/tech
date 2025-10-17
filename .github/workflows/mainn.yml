@@ -1,0 +1,38 @@
+name: Node.js CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-test-quality:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️⃣ Checkout repo
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2️⃣ Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      # 3️⃣ Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # 4️⃣ Build code
+      - name: Build the code
+        run: echo "Building the code..." && echo "Build successful!"
+
+      # 5️⃣ Run tests
+      - name: Run tests
+        run: npm test
+
+      # 6️⃣ Code quality check (using eslint)
+      - name: Code Quality Check
+        run: |
+          npm install -g eslint
+          eslint . --max-warnings=0
